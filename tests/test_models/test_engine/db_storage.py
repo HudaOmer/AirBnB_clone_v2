@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" test file storage """
+"""test db module"""
 from os import getenv
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import (create_engine)
@@ -14,7 +14,7 @@ from models.amenity import Amenity
 
 
 class DBStorage:
-    """ create """
+    """create environmental"""
     __engine = None
     __session = None
 
@@ -33,9 +33,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """
-            all
-        """
+        """"""
         dic = {}
         if cls:
             if isinstance(cls, str):
@@ -54,27 +52,23 @@ class DBStorage:
         return (dic)
 
     def new(self, obj):
-        """
-            new
+        """add a new element in the table
         """
         self.__session.add(obj)
 
     def save(self):
-        """
-            save
+        """save changes
         """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """
-            delete
+        """delete an element in the table
         """
         if obj:
             self.session.delete(obj)
 
     def reload(self):
-        """
-            reload
+        """configuration
         """
         Base.metadata.create_all(self.__engine)
         sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
@@ -82,7 +76,6 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-        """
-        test clone
+        """ calls remove()
         """
         self.__session.close()
