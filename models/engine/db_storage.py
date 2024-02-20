@@ -1,81 +1,81 @@
 #!/usr/bin/python3
-""" new class for sqlAlchemy """
-from models.state import State
-from models.city import City
+"""This module defines a class to manage file storage for hbnb clone"""
 from models.user import User
 from models.place import Place
-from models.review import Review
+from models.state import State
+from models.city import City
 from models.amenity import Amenity
-from os import getenv
-from sqlalchemy.ext.declarative import declarative_base
+from models.review import Review
 from models.base_model import Base
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy import (create_engine)
+from os import getenv
 
 
 class DBStorage:
-    """ create tables in environmental"""
+    """Class Docs"""
+
     __engine = None
     __session = None
 
     def __init__(self):
-        self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}/{}' .format(
-                getenv("HBNB_MYSQL_USER"),
-                getenv("HBNB_MYSQL_PWD"),
-                getenv("HBNB_MYSQL_HOST"),
-                getenv("HBNB_MYSQL_DB")),
-            pool_pre_ping=True)
+        """Function Docs"""
+        hb_user = getenv("HBNB_MYSQL_USER")
+        hb_pwd = getenv("HBNB_MYSQL_PWD")
+        hb_host = getenv("HBNB_MYSQL_HOST")
+        hb_db = getenv("HBNB_MYSQL_DB")
+        hb_env = getenv("HBNB_ENV")
 
-        if getenv("HBNB_ENV") == "test":
+        self.__engine = create_engine(
+            f"mysql+mysqldb://{hb_user}:{hb_pwd}@{hb_host}/{hb_db}",
+            pool_pre_ping=True,
+        )
+
+        if hb_env == "test":
             Base.metadata.drop_all(self.__engine)
 
+    def reload(self):
+        """ reload method """
+        Base.metadata.create_all(self.__engine)
+        Session = scoped_session(
+            sessionmaker(bind=self.__engine, expire_on_commit=False)
+        )
+        self.__session = Session
+
     def all(self, cls=None):
-        """returns a dictionary
-        Return:
-            returns a dictionary of __object
         """
-        dic = {}
-        if cls:
-            if isinstance(cls, str):
-                cls = eval(cls)
-            query = self.__session.query(cls)
-            for elem in query:
-                key = "{}.{}".format(type(elem).__name__, elem.id)
-                dic[key] = elem
+        query all classes or specific one"""
+        allClasses = [User, Place, State, City, Amenity, Review]
+        result = {}
+        if cls is not None:
+            for obj in self.__session.query(cls).all():
+                ClassName = obj.__class__.__name__
+                keyName = ClassName + "." + obj.id
+                result[keyName] = obj
         else:
-            lista = [State, City, User, Place, Review, Amenity]
-            for clase in lista:
-                query = self.__session.query(clase)
-                for elem in query:
-                    key = "{}.{}".format(type(elem).__name__, elem.id)
-                    dic[key] = elem
-        return (dic)
+            for clss in allClasses:
+                for obj in self.__session.query(clss).all():
+                    ClassName = obj.__class__.__name__
+                    keyName = ClassName + "." + obj.id
+                    result[keyName] = obj
+        return result
 
     def new(self, obj):
-        """add a new element in the table
-        """
-        self.__session.add(obj)
-
-    def delete(self, obj=None):
-        """delete an element in the table
-        """
+        """add new obj"""
         if obj:
-            self.session.delete(obj)
+            self.__session.add(obj)
 
     def save(self):
-        """save changes
-        """
+        """commit all changes"""
         self.__session.commit()
 
-    def reload(self):
-        """configuration
-        """
-        Base.metadata.create_all(self.__engine)
-        sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sec)
-        self.__session = Session()
+    def delete(self, obj=None):
+        """delete from the current database session"""
+        if obj:
+            self.__session.delete(obj)
 
     def close(self):
-        """ close session """
-        self.__session.close()
+        """
+        Function docs
+        """
+        self.__session.remove()
