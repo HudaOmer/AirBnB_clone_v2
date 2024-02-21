@@ -7,6 +7,7 @@ from os import getenv
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
 
+
 class Amenity(BaseModel, Base):
     """ This class represents amenity """
     __tablename__ = 'amenities'
