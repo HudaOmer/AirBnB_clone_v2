@@ -5,20 +5,20 @@ from models.city import City
 
 
 class test_City(test_basemodel):
-    """ document documt """
+    """ this class tests City class """
 
     def __init__(self, *args, **kwargs):
-        """ document documt """
+        """ initialising """
         super().__init__(*args, **kwargs)
         self.name = "City"
         self.value = City
 
     def test_state_id(self):
-        """ document documt """
+        """ test for state id type """
         new = self.value()
         self.assertEqual(type(new.state_id), str)
 
     def test_name(self):
-        """ document documt """
+        """ test the name"""
         new = self.value()
         self.assertEqual(type(new.name), str)
