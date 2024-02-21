@@ -12,10 +12,6 @@ from models.amenity import Amenity
 from models.review import Review
 
 
-
-
-
-
 class HBNBCommand(cmd.Cmd):
     """ This class Contains the functionality for the HBNB console"""
 
@@ -122,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not args:
                 raise SyntaxError()
-            
+
             arg_list = args.split(" ")
             kw = {}
             for arg in arg_list[1:]:
