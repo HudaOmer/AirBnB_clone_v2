@@ -39,7 +39,7 @@ class test_Place(test_basemodel):
         self.assertEqual(type(new.number_rooms), int)
 
     def test_number_bathrooms(self):
-        "" test if integer " """
+        """ test if integer """
         new = self.value()
         self.assertEqual(type(new.number_bathrooms), int)
 
