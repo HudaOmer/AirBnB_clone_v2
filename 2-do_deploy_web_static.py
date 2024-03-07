@@ -13,7 +13,8 @@ env.user = "ubuntu"
 
 def do_pack():
     """
-        this function return the archive path if archive has generated correctly.
+        this function return the archive path if archive has generated
+        correctly
     """
 
     local("mkdir -p versions")
