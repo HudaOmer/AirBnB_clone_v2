@@ -23,6 +23,7 @@ def c_is_fun(text):
     return "C " + text.replace('_', ' ')
 
 
+@app.route("/python")
 @app.route("/python/<text>")
 def python_is_cool(text="is cool"):
     """This class returns a string python + some text"""
