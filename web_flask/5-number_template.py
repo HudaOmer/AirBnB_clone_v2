@@ -40,6 +40,7 @@ def number(n):
     """This class displays html only if n is int"""
     return render_template('5-number.html', value=n)
 
+
 if __name__ == "__main__":
     """ The Main Function """
     app.run(host='0.0.0.0', port=5000)
