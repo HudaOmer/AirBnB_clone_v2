@@ -30,7 +30,7 @@ def python_is_cool(text="is cool"):
     return "Python " + text.replace('_', ' ')
 
 
-@app.route("/number/<int:n>", strict_slashes=False)
+@app.route('/number/<int:n>')
 def n_is_a_number(n):
     """This class returns a string int n + is number"""
     return "{} is a number".formt(n)
