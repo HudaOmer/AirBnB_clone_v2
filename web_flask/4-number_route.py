@@ -33,9 +33,8 @@ def python_is_cool(text="is cool"):
 @app.route("/number/<int:n>")
 def n_is_a_number(n):
     """This class returns a string int n + is number"""
-    return "{:d} is a number".formt(n)
+    return "{} is a number".formt(n)
 
 
 if __name__ == '__main__':
-    """Main function"""
     app.run(host='0.0.0.0', port=5000, debug=True)
