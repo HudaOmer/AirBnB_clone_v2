@@ -76,6 +76,6 @@ class DBStorage:
 
     def close(self):
         """
-        Function docs
+       here was the error
         """
-        self.__session.remove()
+        self.__session.close()
