@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.route("/")
+@app.route("/airbnb-onepage/")
 def hello_hbnb():
     """This class returns a string with helllo hbnb"""
     return "Hello HBNB!"
